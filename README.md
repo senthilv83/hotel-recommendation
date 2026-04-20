@@ -1,73 +1,77 @@
 # 🏨 Hotel Operations GenAI Assistant
+
+![Python](https://img.shields.io/badge/Python-3.10-blue.svg)
+![Agentic AI](https://img.shields.io/badge/AI-Agentic_Framework-orange.svg)
+![Graph RAG](https://img.shields.io/badge/RAG-Graph_RAG-green.svg)
+![Semantic Search](https://img.shields.io/badge/NLP-Semantic_Search-purple.svg)
+![Knowledge Graph](https://img.shields.io/badge/Data-Knowledge_Graph-red.svg)
+![Hugging Face](https://img.shields.io/badge/LLM-Hugging_Face-yellow.svg)
+
 **Transforming Maintenance Logs into Policy-Driven Intelligence using Agentic AI, Semantic RAG, and Graph RAG**
 
-## 📖 The Vision
-Hotels generate thousands of data points daily—maintenance logs, guest complaints, and work orders. Traditionally, this data sits in tabular databases requiring manual, keyword-based searches. If a guest complains about a "warm room," a standard system searching for "AC failure" will miss it. Furthermore, traditional systems treat every ticket as an isolated event, missing critical systemic failures.
+---
 
-This project introduces an **Agentic AI Framework** that bridges the gap between raw operational data and corporate policy execution.
+## 🔬 1. Why this Research Approach is Promising for the Enterprise
+In large-scale hospitality (e.g., Marriott, Hilton), raw operational data is siloed in tabular databases. Traditional systems rely on exact keyword matches, meaning a complaint about a "warm fridge" and an "AC failure" are treated as completely distinct, isolated incidents.
 
-## 🔬 Research Approach & Enterprise Advantages
-Why combine **Semantic RAG**, **Graph RAG**, and **Agentic AI**?
+### The Methodology: A Tri-layered Approach
+We selected a hybrid methodology—**Semantic RAG + Graph RAG + Agentic AI**—because it uniquely solves the scaling and reasoning limitations of standard AI implementations:
 
-1. **Semantic Understanding (Beyond Keywords):** Using vector embeddings, the system understands the *intent* behind a ticket. It maps a "Mini-fridge warm" issue and an "AC failure" issue to the same semantic concept: *Thermal Regulation*.
-2. **Topological Context (Graph RAG):** By converting tabular logs into a Knowledge Graph (Nodes = Rooms/Issues, Edges = Occurrences), the AI instantly visualizes "hotspots." It gives the AI *memory* of a room's history, rather than treating a new ticket in a vacuum.
-3. **Automated Policy Execution (Agentic AI):** Instead of just providing a dashboard, an open-source Hugging Face Small Language Model (SLM) is used as an autonomous reasoning engine. It reads the Graph RAG context, cross-references it with corporate policies (e.g., Marriott Policy #1 & #7), and issues a strict operational directive.
+1. **Semantic RAG (Vector Embeddings):** Overcomes human vocabulary variation. It captures the *intent* of a ticket. This is promising because it eliminates the need for strict, drop-down taxonomy systems that staff rarely use correctly.
+2. **Graph RAG (Topological Relationships):** Traditional RAG (Vector Search) is terrible at connecting multi-hop relationships over time. By mapping operational data into a **Knowledge Graph**, the system inherently gains *memory*. It maps seemingly unrelated issues (AC vs. Fridge) to a shared semantic node ("Temperature Control"). This is highly promising for the enterprise because it shifts maintenance from **reactive** (fixing one AC) to **proactive/predictive** (auditing a room's thermal/electrical grid).
+3. **Agentic AI (Autonomous Reasoning):** Rather than just presenting a dashboard to a human, we use an open-source Small Language Model (SLM) to reason over the Graph RAG context and apply corporate policies. This guarantees that complex guest-compensation policies (e.g., "20% discount if unresolved in 2 hours") are uniformly enforced without relying on front-desk staff memory.
 
-### 🚀 Advantages for Enterprise Scale
-* **Proactive Maintenance:** Identify failing infrastructure (e.g., room electrical grids) before multiple guests are impacted.
-* **Automated Compliance:** Ensure front-desk and maintenance staff adhere to complex corporate compensation policies without having to memorize them.
-* **Data-Agnostic Scaling:** The framework can scale from 100 logs to millions of cross-property logs without altering the core reasoning engine.
+**Enterprise Scalability:** This approach minimizes AI hallucinations by grounding the LLM entirely in deterministic Knowledge Graphs and hardcoded corporate manuals, making it safe for production-scale operational deployment.
 
 ---
 
-## 📓 Storytelling: Jupyter Notebook Breakdown
-The `Hotel_Ops_GenAI.ipynb` notebook is structured as an executive storytelling demo.
+## 📓 2. Step-by-Step Technical Explanation of the Notebook
 
-### Intro: The Agentic AI Promise
-Sets the stage: Moving from isolated tickets to connected, automated actions.
+The `Hotel_Ops_GenAI.ipynb` notebook is designed for storytelling. It walks stakeholders from the problem (raw data) to the solution (Autonomous Action).
 
-### Step 1: Data Exploration (The Problem)
-Loads raw, synthetic tabular data (2025-2026). Visualizes the frequency of issues.
-* **The "Why":** Demonstrates how hard it is for humans to spot long-term patterns in raw `.csv` files.
+### 🛠️ Cell 1: Data Ingestion & Exploration
+* **Why this step:** To establish the baseline problem. Humans and traditional systems struggle to identify recurring patterns inside raw, tabular CSV files.
+* **Input:** `data/maintenance_logs.csv` (100 rows of synthetic room numbers, issues, dates, and statuses).
+* **Output:** A Pandas DataFrame view and a Matplotlib bar chart showing the frequency of total issues across the hotel.
 
-### Step 2: Semantic Retrieval
-Converts logs into vector embeddings using ChromaDB and Hugging Face (`all-MiniLM-L6-v2`). 
-* **The "Why":** Proves the system can find "AC Failures" even when the user searches for "Temperature problems."
+### 🧠 Cell 2: Semantic Retrieval (Beyond Keywords)
+* **Why this step:** To demonstrate that keyword matching is fundamentally flawed for human-generated text. 
+* **Input:** A natural language query (`"Temperature problems in room 402"`) and ChromaDB vector store.
+* **Output:** The system retrieves logs like "Mini-fridge warm," proving the Hugging Face embedding model (`all-MiniLM-L6-v2`) understands semantic *meaning* rather than just string matching.
 
-### Deep Dive: Keyword Matching vs. Graph RAG
-Simulates a single new ticket arriving for Room 402.
-* **Keyword View:** Shows 1 isolated row. No context.
-* **Graph RAG View:** Renders a visual NetworkX graph mapping the current AC issue AND past mini-fridge issues to a shared **Semantic Node: Temperature Control**.
-* **The "Why":** Visually proves to stakeholders why context matters.
+### 🕸️ Cell 3: Deep Dive - Keyword Matching vs. Graph RAG (Single Entry)
+* **Why this step:** To visually prove why topological context (Graph RAG) is superior to isolated database lookups.
+* **Input:** A single new ticket: *"AC failure in Room 402"*.
+* **Output:** Two distinct views. First, the isolated tabular row. Second, a NetworkX graph connecting the Room (Blue), the Current Issue (Red), Past Issues (Gray), and the overarching **Semantic Node: Temperature Control** (Orange). This proves the system "remembers" context.
 
-### Step 3: Graph Relationships (Hotspots)
-Generates a full Knowledge Graph of the entire hotel.
-* **The "Why":** Shows structural hotspots where preventative maintenance should be prioritized.
+### 🌐 Cell 4: Macro Graph Relationships (Spotting Hotspots)
+* **Why this step:** To show how this scales to the entire property. By graphing all rooms and all issues, structural hotspots become glaringly obvious.
+* **Input:** The entire maintenance log dataset.
+* **Output:** A macro-level Knowledge Graph (NetworkX) where heavily connected nodes (problematic rooms) draw immediate attention for preventative maintenance.
 
-### Step 4: Agentic AI Recommendation Framework
-Injects the Graph RAG Context and raw Hotel Policies into an open-source Instruction-Tuned LLM (`Qwen1.5-0.5B-Chat` acting as a fast local stand-in for Mistral). The Agent is strictly prompted to avoid conversational fluff.
-* **The "Why":** Demonstrates autonomous reasoning. The Agent outputs a crisp, 2-bullet point directive (Recommendation & Hotel Policy) dictating room audits and guest compensation (20% discount).
+### 🤖 Cell 5: Agentic AI Recommendation Engine
+* **Why this step:** Data visualization is not enough; enterprise value is created through action. This step uses an Agentic SLM to process the Graph RAG data and execute policy.
+* **Input:** 
+  1. The specific Graph RAG context for Room 402 (Current AC failure + Past Fridge failure = Temperature Control issue).
+  2. The raw text of Marriott Corporate Policies (#1 and #7).
+* **Output:** A strict, deterministic, 2-bullet point operational directive:
+  * **Recommendation:** Action for the room and guest compensation directives.
+  * **Hotel Policy:** The explicit citation of the rules justifying the action.
 
 ---
 
-## 🛠️ Tech Stack
-* **Orchestration:** LangChain
-* **Vector Database:** ChromaDB
-* **Embeddings & LLM:** Hugging Face Transformers (`Qwen/Qwen1.5-0.5B-Chat`)
-* **Knowledge Graph:** NetworkX, Matplotlib
-* **Data Manipulation:** Pandas
+## 💻 3. Tech Stack & Execution
+* **Language:** Python 3.10+
+* **AI Orchestration:** Hugging Face `transformers`, `torch`
+* **Local SLM:** `Qwen/Qwen1.5-0.5B-Chat` (Stand-in for larger Mistral/Llama models)
+* **Vector DB:** ChromaDB + `sentence-transformers`
+* **Knowledge Graph:** `networkx`, `matplotlib`
+* **Data Handling:** `pandas`
 
-## 💻 How to Run Locally
-1. Clone the repository.
-2. Install dependencies:
-   ```bash
-   pip install -r requirements.txt
-   ```
-3. Run the interactive Streamlit UI:
-   ```bash
-   streamlit run app.py
-   ```
-4. Explore the Storytelling Notebook:
-   ```bash
-   jupyter notebook Hotel_Ops_GenAI.ipynb
-   ```
+### How to Run Locally
+```bash
+git clone https://github.com/senthilv83/hotel-recommendation.git
+cd hotel-recommendation
+pip install -r requirements.txt
+jupyter notebook Hotel_Ops_GenAI.ipynb
+```
