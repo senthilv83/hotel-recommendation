@@ -1,4 +1,8 @@
 Room,Issue,Date,Status
+402,AC failure,Oct 24 2026,Pending
+402,Mini-fridge warm,Jan 15 2026,Resolved
+504,AC failure,Feb 10 2026,Resolved
+101,Mini-fridge warm,Mar 11 2026,In Progress
 504,Broken lamp,Apr 25 2025,Pending
 103,AC failure,Jun 20 2025,In Progress
 204,WiFi issue,Jan 01 2026,Pending
