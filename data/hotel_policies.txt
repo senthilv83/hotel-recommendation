@@ -1,0 +1,9 @@
+Marriott International Maintenance & Guest Service Policies:
+
+1. AC Failure Policy: If a guest reports AC failure, the maintenance team must respond within 30 minutes. If not resolved in 2 hours, offer a room change or a 20% discount on the night's stay.
+2. Water Leak Policy: Immediate escalation to Chief Engineer. Shut off water main to the affected wing if necessary. 
+3. WiFi Connectivity: Ensure 100% coverage in guest rooms. If a guest reports issues, reset the floor router. If persistent, provide a complimentary upgrade to premium high-speed internet.
+4. Plumbing Issues: Clogs must be resolved within 1 hour. If guest room is unusable, provide immediate relocation.
+5. Maintenance Logging: All issues must be logged with Room Number, Issue Type, Date, and Resolution Status.
+6. Guest Compensation: For any maintenance issue lasting more than 4 hours during active hours (8 AM - 10 PM), a complimentary breakfast or drink voucher should be provided.
+7. Repeat Issues: If a room has more than 3 issues in a month, take it out of service for a deep technical audit.
